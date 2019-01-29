@@ -13,7 +13,7 @@
         立即登录
       </nuxt-link>
       <nuxt-link class="register" to="/register">
-        立即注册
+        注册
       </nuxt-link>
     </template>
   </div>
