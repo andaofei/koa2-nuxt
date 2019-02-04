@@ -1,12 +1,10 @@
 <template>
-  <div class="layout-blank">
-    <nuxt />
-  </div>
+  <div>order</div>
 </template>
 
 <script>
 export default {
-  name: 'Blank'
+  name: 'Order'
 }
 </script>
 

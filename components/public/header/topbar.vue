@@ -6,10 +6,10 @@
     <el-col :span="5">
       <Geo />
     </el-col>
-    <el-col :span="5">
+    <el-col :span="6">
       <User />
     </el-col>
-    <el-col :span="14">
+    <el-col :span="13">
       <Navbar />
     </el-col>
   </el-row>

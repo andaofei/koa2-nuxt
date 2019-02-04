@@ -34,7 +34,7 @@
           >
             <dt>热门搜索</dt>
             <dd
-              v-for="(item, index) of hotPlace "
+              v-for="(item, index) of $store.state.home.hotPlace.slice(0, 4)"
               :key="index"
             >
               <a :href="'/products?keyword='+encodeURIComponent(item.name)">
@@ -57,17 +57,11 @@
           </dl>
         </div>
         <p class="suggest">
-          <a href="#">
-            故宫
-          </a>
-          <a href="#">
-            故宫
-          </a>
-          <a href="#">
-            故宫
-          </a>
-          <a href="#">
-            故宫
+          <a
+            v-for="(item, index) of $store.state.home.hotPlace.slice(0, 5)"
+            :key="index"
+          >
+            {{ item.name }}
           </a>
         </p>
         <ul class="nav">
@@ -160,17 +154,7 @@ export default {
           name: 4
         }
       ],
-      searchList: [
-        {
-          name: 1
-        },
-        {
-          name: 2
-        },
-        {
-          name: 4
-        }
-      ]
+      searchList: []
     }
   },
   computed: {
@@ -190,7 +174,30 @@ export default {
         this.isFocus = false
       }, 200)
     },
-    input() {},
+    input() {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(async () => {
+        const city = this.$store.state.geo.position.city.replace('市', '')
+        this.searchList = []
+        if (!this.search) {
+          return
+        }
+        const {
+          status,
+          data: { top }
+        } = await this.$axios.get('/search/top', {
+          params: {
+            input: this.search,
+            city
+          }
+        })
+        if (status === 200) {
+          this.searchList = top.slice(0, 10)
+        }
+      }, 300)
+    },
     searchProduct() {}
   }
 }
